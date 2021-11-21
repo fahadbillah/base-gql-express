@@ -1,0 +1,29 @@
+# scalar DateTime
+
+input RegistrationInput{
+  name: String!
+  email: String!
+  password: String!
+  confirmPassword: String!
+}
+
+input LoginInput{
+  email: String!
+  password: String!
+}
+
+type User{
+  id: ID!
+  name: String!
+  email: String!
+  joined: String!
+}
+
+type Query {
+  search: String
+}
+
+type Mutation {
+  registration(input: RegistrationInput): User
+  login(input: LoginInput): String
+}

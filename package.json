@@ -1,0 +1,29 @@
+{
+  "name": "homelike",
+  "version": "1.0.0",
+  "description": "homelike assignment",
+  "scripts": {
+    "start": "",
+    "dev": "babel-watch src/app.js"
+  },
+  "main": "dist/app.js",
+  "author": "Fahad Billah",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-watch": "^7.6.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3"
+  },
+  "dependencies": {
+    "apollo-server-core": "^3.5.0",
+    "apollo-server-express": "^3.5.0",
+    "express": "^4.17.1",
+    "graphql": "^16.0.1",
+    "regenerator-runtime": "^0.13.9"
+  }
+}
