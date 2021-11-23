@@ -19,11 +19,55 @@ type User{
   joined: String!
 }
 
+input LocationInput {
+  lat: Float
+  lon: Float
+  distanceLimit: Int
+}
+
+type Location {
+  lat: Float
+  lon: Float
+}
+
+input ApartmentInput{
+  rooms: Int!
+  city: String!
+  country: String!
+  location: LocationInput!
+}
+
+type Apartment{
+  id: ID!
+  rooms: Int!
+  city: String!
+  country: String!
+  userId: ID!
+  location: Location!
+  distance: String
+}
+
+input SearchInput {
+  rooms: Int
+  city: String
+  country: String
+}
+
+type FavoriteList{
+  favorites: [Apartment]
+}
+
 type Query {
-  search: String
+  search(filter: SearchInput, location: LocationInput): [Apartment]
+  favoriteList: FavoriteList
 }
 
 type Mutation {
-  registration(input: RegistrationInput): User
-  login(input: LoginInput): String
+  registration(input: RegistrationInput!): User
+  login(input: LoginInput!): String
+
+  createApartment(input: ApartmentInput!): Apartment
+  removeApartment(id: ID!): Boolean
+
+  toggleFavorite(id: ID!): String
 }

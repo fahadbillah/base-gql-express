@@ -1,5 +1,5 @@
 import Loki from 'lokijs';
-import { config } from './constant';
+import { config } from '../constant';
 
 const { dbName } = config;
 

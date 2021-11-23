@@ -18,10 +18,11 @@ import resolvers from './resolvers';
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
-    // context: ({ req }) => {
-    //   console.log(req.body, req.headers);
-    //   return { token: '' };
-    // },
+    context: ({ req }) => {
+      const jwt = req?.headers?.authorization;
+      const authToken = jwt ? jwt.split(' ')[1] : null;
+      return { authToken };
+    },
   });
 
   await server.start();

@@ -5,14 +5,14 @@ import {
   passwordCompare,
   generateAccessToken,
   CustomApolloError,
-} from './utils';
+} from '../utils';
 
-import User from './connector';
+import User from '../models/user';
 
 const users = new User();
 
 export default {
-  async createUser(user) {
+  async create(user) {
     const newUser = { ...user };
 
     try {
@@ -30,7 +30,7 @@ export default {
 
     return newUser;
   },
-  async authenticateUser(login) {
+  async authenticate(login) {
     const { email, password } = login;
     const user = users.find({ email });
     if (user === null) {

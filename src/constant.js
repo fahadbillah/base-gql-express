@@ -1,7 +1,20 @@
 export const errors = {
-  MismatchConfirmPassword: 'Confirm password doesn\'t match',
-  WrongPassword: 'Wrong password!',
-  EmailNotFound: 'Email not found!',
+  MismatchConfirmPassword: {
+    httpCode: 400,
+    message: 'Confirm password doesn\'t match',
+  },
+  WrongPassword: {
+    httpCode: 400,
+    message: 'Wrong password!',
+  },
+  EmailNotFound: {
+    httpCode: 400,
+    message: 'Email not found!',
+  },
+  NotAuthenticated: {
+    httpCode: 401,
+    message: 'User not authenticated',
+  },
 };
 
 export const config = {

@@ -4,7 +4,9 @@
   "description": "homelike assignment",
   "scripts": {
     "start": "",
-    "dev": "babel-watch src/app.js"
+    "dev": "babel-watch src/app.js",
+    "lint": "eslint './src/**' --fix-dry-run",
+    "lint:fix": "eslint './src/**' --fix"
   },
   "main": "dist/app.js",
   "author": "Fahad Billah",
@@ -24,8 +26,10 @@
     "apollo-server-errors": "^3.3.0",
     "apollo-server-express": "^3.5.0",
     "bcrypt": "^5.0.1",
+    "dataloader": "^2.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "geodist": "^0.2.1",
     "graphql": "^16.0.1",
     "jsonwebtoken": "^8.5.1",
     "lokijs": "^1.5.12",
