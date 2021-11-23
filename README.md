@@ -7,6 +7,7 @@ Pre-requisite
 
 Steps to run the project
 ```console
+$ git clone -b homelike https://github.com/fahadbillah/base-gql-express homelike-fahad && cd homelike-fahad
 $ yarn install
 $ yarn build
 $ yarn start
