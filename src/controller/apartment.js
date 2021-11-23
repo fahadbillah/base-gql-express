@@ -21,7 +21,8 @@ export default {
       rooms,
       city,
       country,
-      location,
+      lat,
+      lon,
     } = apartment;
 
     const newApartment = apartments.create({
@@ -30,9 +31,16 @@ export default {
       city,
       country,
       userId,
-      location,
+      location: {
+        lat,
+        lon,
+      },
     });
     return newApartment;
+  },
+  async remove(id, context) {
+    await authCheck(context);
+    return apartments.remove(id);
   },
   search(args) {
     const { location, filter } = args;
@@ -58,12 +66,7 @@ export default {
 
     return result;
   },
-  async remove(id, context) {
-    await authCheck(context);
-    return apartments.remove(id);
-  },
   list(ids) {
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^', ids);
     return apartments.find({ id: { $in: ids } });
   },
 };

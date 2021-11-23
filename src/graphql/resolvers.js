@@ -1,6 +1,6 @@
-import user from './controller/user';
-import apartment from './controller/apartment';
-import favorite from './controller/favorite';
+import user from '../controller/user';
+import apartment from '../controller/apartment';
+import favorite from '../controller/favorite';
 
 const resolvers = {
   FavoriteList: {

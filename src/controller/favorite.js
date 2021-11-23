@@ -24,7 +24,6 @@ export default {
     await authCheck(context);
     const userId = getUserIdFromContext(context);
     const result = favorite.find({ userId });
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@', result);
     return result;
   },
 };

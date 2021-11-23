@@ -1,5 +1,3 @@
-# scalar DateTime
-
 input RegistrationInput{
   name: String!
   email: String!
@@ -20,9 +18,9 @@ type User{
 }
 
 input LocationInput {
-  lat: Float
-  lon: Float
-  distanceLimit: Int
+  lat: Float!
+  lon: Float!
+  distanceLimit: Int!
 }
 
 type Location {
@@ -34,7 +32,8 @@ input ApartmentInput{
   rooms: Int!
   city: String!
   country: String!
-  location: LocationInput!
+  lat: Float
+  lon: Float
 }
 
 type Apartment{
@@ -58,16 +57,23 @@ type FavoriteList{
 }
 
 type Query {
+  """ search apartment using filter and location coordinates """
   search(filter: SearchInput, location: LocationInput): [Apartment]
+  """ shows user's favorite apartments list """
   favoriteList: FavoriteList
 }
 
 type Mutation {
+  # register new user
   registration(input: RegistrationInput!): User
+  # login using email & password
   login(input: LoginInput!): String
 
+  # create new apartment entry connected to user
   createApartment(input: ApartmentInput!): Apartment
+  # for development use
   removeApartment(id: ID!): Boolean
 
+  # add/remove favorite to/from user favorite list. return operation message
   toggleFavorite(id: ID!): String
 }
