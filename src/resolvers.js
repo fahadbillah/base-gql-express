@@ -1,15 +1,12 @@
+import user from './user';
+
 const resolvers = {
   Query: {
     search: () => 'test',
   },
   Mutation: {
-    registration: () => ({
-      id: 1,
-      name: 'Dummy User',
-      email: 'johndoe@gmail.com',
-      joined: new Date().toISOString(),
-    }),
-    login: () => 'login.jwt.token',
+    registration: async (root, { input }) => user.createUser(input),
+    login: async (root, { input }) => user.authenticateUser(input),
   },
 };
 

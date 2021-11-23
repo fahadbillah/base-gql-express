@@ -19,7 +19,8 @@ import resolvers from './resolvers';
       ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
     // context: ({ req }) => {
-    //   return { };
+    //   console.log(req.body, req.headers);
+    //   return { token: '' };
     // },
   });
 
