@@ -22,11 +22,11 @@ import resolvers from './graphql/resolvers';
     playground: {
       shareEnabled: true,
     },
-    context: ({ req }) => {
-      const jwt = req?.headers?.authorization;
-      const authToken = jwt ? jwt.split(' ')[1] : null;
-      return { authToken };
-    },
+    // context: ({ req }) => {
+    //   const jwt = req?.headers?.authorization;
+    //   const authToken = jwt ? jwt.split(' ')[1] : null;
+    //   return { authToken };
+    // },
   });
 
   await server.start();

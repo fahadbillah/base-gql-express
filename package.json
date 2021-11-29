@@ -8,7 +8,8 @@
     "build": "babel ./src -d ./dist --copy-files",
     "lint": "eslint './src/**' --fix-dry-run",
     "lint:fix": "eslint './src/**' --fix",
-    "test": "mocha --require @babel/register ./test/**/*.spec.js"
+    "test": "mocha --require @babel/register ./test/**/*.spec.js",
+    "test:tdd": " mocha --require @babel/register --watch ./test/**/*.js"
   },
   "main": "dist/app.js",
   "author": "Fahad Billah",

@@ -1,79 +1,60 @@
-input RegistrationInput{
+type Customer {
   name: String!
   email: String!
-  password: String!
-  confirmPassword: String!
+  phone: String!
 }
 
-input LoginInput{
-  email: String!
-  password: String!
-}
-
-type User{
-  id: ID!
+input CustomerInput {
   name: String!
   email: String!
-  joined: String!
+  phone: String!
 }
 
-input LocationInput {
-  lat: Float!
-  lon: Float!
-  distanceLimit: Int!
+type Vehicle {
+  make: String!
+  model: String!
+  vin: String!
 }
 
-type Location {
-  lat: Float
-  lon: Float
+input VehicleInput {
+  make: String!
+  model: String!
+  vin: String!
 }
 
-input ApartmentInput{
-  rooms: Int!
-  city: String!
-  country: String!
-  lat: Float
-  lon: Float
-}
-
-type Apartment{
+type Booking {
   id: ID!
-  rooms: Int!
-  city: String!
-  country: String!
-  userId: ID!
-  location: Location!
-  distance: String
+  dateTime: String!
+  vehicle: Vehicle!
+  customer: Customer!
+}
+
+input BookTimeInput {
+  date: String!
+  time: Int!
+}
+
+input BookingInput {
+  customer: CustomerInput!
+  vehicle: VehicleInput!
+  booking: BookTimeInput!
 }
 
 input SearchInput {
-  rooms: Int
-  city: String
-  country: String
-}
-
-type FavoriteList{
-  favorites: [Apartment]
+  date: String
+  vin: String
 }
 
 type Query {
-  """ search apartment using filter and location coordinates """
-  search(filter: SearchInput, location: LocationInput): [Apartment]
-  """ shows user's favorite apartments list """
-  favoriteList: FavoriteList
+  """
+    search apartment using filter and location coordinates
+  """
+  getBooking(filter: SearchInput): [Booking]
 }
 
 type Mutation {
-  # register new user
-  registration(input: RegistrationInput!): User
-  # login using email & password
-  login(input: LoginInput!): String
-
-  # create new apartment entry connected to user
-  createApartment(input: ApartmentInput!): Apartment
-  # for development use
-  removeApartment(id: ID!): Boolean
-
-  # add/remove favorite to/from user favorite list. return operation message
-  toggleFavorite(id: ID!): String
+  """
+    create new booking
+  """
+  createBooking(input: BookingInput!): Booking
 }

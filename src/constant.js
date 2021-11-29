@@ -1,24 +1,28 @@
 export const errors = {
-  MismatchConfirmPassword: {
+  WrongTimeSlot: {
     httpCode: 400,
-    message: 'Confirm password doesn\'t match',
+    message: 'Wrong time slot!',
   },
-  WrongPassword: {
+  InvalidDate: {
     httpCode: 400,
-    message: 'Wrong password!',
+    message: 'Invalid date!',
   },
-  EmailNotFound: {
+  FullyBooked: {
     httpCode: 400,
-    message: 'Email not found!',
-  },
-  NotAuthenticated: {
-    httpCode: 401,
-    message: 'User not authenticated',
+    message: 'This slot is fully booked. Please choose another time.',
   },
 };
 
+export const bookingConfig = {
+  startHour: 9,
+  endHour: 17, // 24 hour format
+  duration: 2,
+  maxConsecutiveBooking: 2,
+};
+
 export const config = {
-  dbName: './data/homelike.db',
-  saltRounds: 5,
-  jwtExpiresIn: '1800s',
+  dbName: './data/volvo.db',
+  autoload: true,
+  autosave: true,
+  autosaveInterval: 1000,
 };

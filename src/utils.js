@@ -1,14 +1,9 @@
-import bcrypt from 'bcrypt';
 import { ApolloError } from 'apollo-server-errors';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-import { config, errors } from './constant';
-
-dotenv.config();
+import { errors } from './constant';
 
 export class CustomApolloError extends ApolloError {
-  constructor(error) {
+  constructor(error, messageExtension = '') {
     if (!(error instanceof Error)) {
       // eslint-disable-next-line no-param-reassign
       error = new Error(error);
@@ -19,43 +14,18 @@ export class CustomApolloError extends ApolloError {
       });
     } else {
       const { httpCode, message } = errors[error.message];
-      super(message, error.message, {
+      super(`${message} ${messageExtension}`, error.message, {
         httpCode,
       });
     }
   }
 }
 
-export async function passwordHash(password) {
-  const { saltRounds } = config;
-  return bcrypt.hash(password, saltRounds);
+export function isValidDate(d) {
+  return d instanceof Date && !Number.isNaN(d);
 }
 
-export async function passwordCompare(password, hash) {
-  return bcrypt.compare(password, hash);
-}
-
-export function generateAccessToken(username) {
-  const { jwtExpiresIn: expiresIn } = config;
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn });
-}
-
-export async function authCheck(context) {
-  const { authToken } = context;
-
-  if (!authToken) {
-    throw new CustomApolloError('NotAuthenticated');
-  }
-
-  try {
-    await jwt.verify(authToken, process.env.TOKEN_SECRET);
-  } catch (error) {
-    throw new CustomApolloError('NotAuthenticated');
-  }
-}
-
-export function getUserIdFromContext(context) {
-  const { authToken } = context;
-  const { id } = jwt.decode(authToken);
-  return id;
+export function formatDateTime(date, time) {
+  const formattedTime = `${time}`.padStart(2, 0);
+  return new Date(`${date}T${formattedTime}:00:00`);
 }
