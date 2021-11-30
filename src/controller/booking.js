@@ -9,17 +9,28 @@ export default class Booking {
   constructor() {
     this.bookingModel = new BookingModel();
 
-    let { startHour } = bookingConfig;
-    const { endHour, duration } = bookingConfig;
+    const {
+      startHour,
+      endHour,
+      duration,
+      maxBookingCapacity,
+    } = bookingConfig;
 
+    this.maxBookingCapacity = maxBookingCapacity;
+
+    this.bookingSlots = Booking.createBookingSlots(startHour, endHour, duration);
+  }
+
+  static createBookingSlots(startHour, endHour, duration) {
     const totalBookingSlotPerDay = Math.floor((endHour - startHour) / duration);
 
-    this.bookingSlots = Array.from({
+    return Array.from({
       length: totalBookingSlotPerDay,
     }, (e, i) => {
       if (i === 0) {
         return startHour;
       }
+      // eslint-disable-next-line no-param-reassign
       startHour += duration;
       return startHour;
     });
@@ -27,8 +38,7 @@ export default class Booking {
 
   checkBookingAvailability(dateTime) {
     const result = this.bookingModel.getBookingByDateTime(dateTime);
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^', result);
-    if (result.length >= bookingConfig.maxConsecutiveBooking) return false;
+    if (result.length >= this.maxBookingCapacity) return false;
     return true;
   }
 
@@ -43,7 +53,6 @@ export default class Booking {
 
     const dateTime = formatDateTime(date, time);
 
-    console.log('******', isValidDate(dateTime), dateTime);
     if (!isValidDate(dateTime)) {
       throw new CustomApolloError('InvalidDate', 'Date format should be `YYYY-MM-DD`');
     }
@@ -62,5 +71,22 @@ export default class Booking {
 
     const result = this.bookingModel.create(bookingDetails);
     return result;
+  }
+
+  updateCapacity(capacity) {
+    this.maxBookingCapacity = capacity;
+    return this.maxBookingCapacity;
+  }
+
+  searchByDate(date) {
+    const formattedDate = new Date(date);
+    if (!isValidDate(formattedDate)) {
+      throw new CustomApolloError('InvalidDate', 'Date format should be `YYYY-MM-DD`');
+    }
+    return this.bookingModel.getBookingByDate(formattedDate);
+  }
+
+  searchByVin(vin) {
+    return this.bookingModel.getBookingByVin(vin);
   }
 }

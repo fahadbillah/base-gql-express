@@ -11,18 +11,16 @@ export const errors = {
     httpCode: 400,
     message: 'This slot is fully booked. Please choose another time.',
   },
+  InvalidVIN: {
+    httpCode: 400,
+    message: 'The VIN provided is invalid! VIN need to be 17 character long.',
+  },
 };
 
 export const bookingConfig = {
   startHour: 9,
   endHour: 17, // 24 hour format
   duration: 2,
-  maxConsecutiveBooking: 2,
-};
-
-export const config = {
-  dbName: './data/volvo.db',
-  autoload: true,
-  autosave: true,
-  autosaveInterval: 1000,
+  maxBookingCapacity: 2,
+  vinLength: 17,
 };

@@ -1,51 +1,30 @@
-import Loki from 'lokijs';
-import { config } from '../constant';
-
-const {
-  dbName,
-  autoload,
-  autosave,
-  autosaveInterval,
-} = config;
-
 export default class BookingModel {
   constructor() {
-    this.db = new Loki(dbName, {
-      autoloadCallback: () => this.databaseInitialize.call(this),
-      autoload,
-      autosave,
-      autosaveInterval,
-    });
-  }
-
-  databaseInitialize() {
-    this.booking = this.db.getCollection('booking');
-    if (this.booking === null) {
-      this.booking = this.db.addCollection('booking');
-    }
-
-    const entryCount = this.db.getCollection('booking').count();
-    console.log(`number of entries in database : ${entryCount}`);
+    this.db = [];
   }
 
   create(bookingDetails) {
-    const { id } = this.booking.insert(bookingDetails);
-    const result = this.booking.find({ id });
-    // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$', result);
-    return result[0];
+    this.db.push(bookingDetails);
+    return bookingDetails;
   }
 
   getBookingByDateTime(dateTime) {
-    const result = this.booking.find({ dateTime: { $dteq: dateTime } });
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@', result, dateTime, dateTime.toISOString());
-    return result;
+    return this.db.filter((item) => {
+      const dt = new Date(item.dateTime);
+      return dt.getTime() === dateTime.getTime();
+    });
   }
 
   getBookingByDate(date) {
-    return this.booking.find({ date });
+    const datePart = date.toISOString().split('T')[0];
+    return this.db.filter((item) => {
+      const dt = new Date(item.dateTime);
+      const itemDatePart = dt.toISOString().split('T')[0];
+      return datePart === itemDatePart;
+    });
   }
 
-  find(user) {
-    return this.booking.findOne(user);
+  getBookingByVin(vin) {
+    return this.db.filter(({ vehicle }) => vehicle.vin === vin);
   }
 }

@@ -1,3 +1,5 @@
+scalar Vin
+
 type Customer {
   name: String!
   email: String!
@@ -13,24 +15,33 @@ input CustomerInput {
 type Vehicle {
   make: String!
   model: String!
-  vin: String!
+  vin: Vin!
 }
 
 input VehicleInput {
   make: String!
   model: String!
-  vin: String!
+  vin: Vin!
 }
 
 type Booking {
   id: ID!
+  """
+  ISO dateTime string
+  """
   dateTime: String!
   vehicle: Vehicle!
   customer: Customer!
 }
 
 input BookTimeInput {
+  """
+  YYYY-MM-DD
+  """
   date: String!
+  """
+  24 hour time format
+  """
   time: Int!
 }
 
@@ -40,21 +51,24 @@ input BookingInput {
   booking: BookTimeInput!
 }
 
-input SearchInput {
-  date: String
-  vin: String
-}
-
 type Query {
   """
-    search apartment using filter and location coordinates
+  search booking using date
   """
-  getBooking(filter: SearchInput): [Booking]
+  getBookingByDate(date: String!): [Booking]
+  """
+  search booking using vin
+  """
+  getBookingByVin(vin: Vin!): [Booking]
 }
 
 type Mutation {
   """
-    create new booking
+  update booking capacity. default: 2
+  """
+  updateCapacity(capacity: Int!): Int
+  """
+  create new booking
   """
   createBooking(input: BookingInput!): Booking
 }

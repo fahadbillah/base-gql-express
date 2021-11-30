@@ -22,7 +22,7 @@ export class CustomApolloError extends ApolloError {
 }
 
 export function isValidDate(d) {
-  return d instanceof Date && !Number.isNaN(d);
+  return d instanceof Date && !Number.isNaN(d.getTime());
 }
 
 export function formatDateTime(date, time) {
